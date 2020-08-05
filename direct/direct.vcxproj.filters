@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="libs">
+      <UniqueIdentifier>{993cc7ec-24de-4419-9277-758751aa6107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{6a281913-4050-4a29-9318-1534d9127347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{6ce6041a-d4cf-4c0b-8ef7-84d57db99097}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\log.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\keyboard.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\msg.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\event.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\localstring.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\log.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\keyboard.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\keymap.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\event.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\msg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\localstring.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sid.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
