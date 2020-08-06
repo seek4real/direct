@@ -6,7 +6,7 @@
 
 #include <fstream>
 #include <string>
-#include <Windows.h>
+
 
 
 
@@ -26,7 +26,6 @@ protected:
 
 	static Logger* _instance;
 	std::fstream logfile;
-	HANDLE handle;
 
 	bool debug;
 	bool runprint;

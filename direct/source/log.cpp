@@ -1,6 +1,6 @@
 // Log.cpp
 
-
+#include <Windows.h>
 #include "../include/log.h"
 
 #ifndef _LOG_FILE_NAME_
@@ -9,6 +9,7 @@ std::string LOG_FILE_NAME = "run.log";
 #endif // !_LOG_FILE_NAME_
 
 Logger* Logger::_instance = nullptr;
+HANDLE handle;
 
 Logger::Logger():debug(false), runprint(false), runlog(false)
 {

@@ -20,9 +20,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="source\log.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -42,6 +39,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="source\sid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fileutils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\inputcontrol.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\platform.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -70,5 +76,20 @@
     <ClInclude Include="include\sid.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\fileutils.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\inputcontrol.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\platform.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitignore" />
   </ItemGroup>
 </Project>

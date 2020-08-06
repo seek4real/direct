@@ -1,37 +1,31 @@
-// main.cpp
-// DirectX D3D practice Project
+/**
+** 系统平台相关支持
+*/
 
 
 #include <windows.h>
-#include<string>
+#include "../include/platform.h"
+
 #include "../include/log.h"
 #include "../include/game.h"
 
-LPCSTR m_applicationName;
-HINSTANCE m_hInstance;
 Game *game = nullptr;
 
-HWND m_hwnd;
-bool bexit = false;
-
-bool InitWindow(int&, int&);
-bool Initialize();
-
-void Startup();
-void Run();
-void Shutdown();
-
-
-// WINDOWS CALLBACK FUNCTION
-static LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 //config
-const bool FULL_SCREEN = true;
+const bool FULL_SCREEN = false;
 const bool DEBUG = true;
 const bool PRINT = true;
 const bool RUNLOG = false;
 
+LPCSTR m_applicationName;
+HINSTANCE m_hInstance;
+
+HWND m_hwnd;  //Application window句柄
+
+// WINDOWS CALLBACK FUNCTION
+static LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 void log(const std::string str)
 {
@@ -47,14 +41,74 @@ void console(const std::string s)
 	Logger::get()->print(s);
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pCmdLine, int iCmdShow)
+void Startup()
 {
-	Startup();
-	Initialize();
-	Run();
-	Shutdown();
+	if (game == nullptr)
+	{
+		game = new Game;
+	}
+	game->init(DEBUG, PRINT, RUNLOG);
+}
 
-	return 0;
+void Run()
+{
+	Logger::get()->log("Application Run Start.");
+	MSG msg;
+	while (game->isrunning())
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) {
+				log("Message Quit.");
+				break;
+			}
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		game->update();
+	}
+
+}
+
+void Shutdown()
+{
+	log("Application shutdown");
+	game->exit();
+	delete game;
+	game = nullptr;
+	ShowCursor(true);
+	if (FULL_SCREEN) {
+		ChangeDisplaySettings(NULL, 0);
+	}
+
+	DestroyWindow(m_hwnd);
+	m_hwnd = NULL;
+
+	UnregisterClass(m_applicationName, m_hInstance);
+	m_hInstance = NULL;
+}
+
+
+LRESULT CALLBACK WndProc(HWND winHandle, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_CREATE:
+		log("Window create.");
+		break;
+	case WM_DESTROY:
+		log("Window destroy.");
+		PostQuitMessage(0);
+		return 0;
+	case WM_KEYDOWN:
+		return 0;
+	case WM_CHAR:
+		game->inputhandle((char)wParam);
+		return 0;
+	default:
+		break;
+	}
+	return DefWindowProc(winHandle, msg, wParam, lParam);
 }
 
 bool InitWindow(int& screenW, int& screenH)
@@ -138,81 +192,3 @@ bool InitWindow(int& screenW, int& screenH)
 
 	return true;
 }
-
-bool Initialize()
-{
-	int w = 100, h = 100;
-	return InitWindow(w, h);
-}
-
-void Startup()
-{
-	if (game == nullptr)
-	{
-		game = new Game;
-	}
-	game->init(DEBUG, PRINT, RUNLOG);
-}
-
-void Run()
-{
-	Logger::get()->log("Application Run Start.");
-	MSG msg;
-	while (game->isrunning())
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) 
-		{
-			if (msg.message == WM_QUIT) {
-				log("Message Quit.");
-				break;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		game->update();
-	}
-
-}
-
-void Shutdown()
-{
-	log("Application shutdown");
-	game->exit();
-	delete game;
-	game = nullptr;
-	ShowCursor(true);
-	if (FULL_SCREEN) {
-		ChangeDisplaySettings(NULL, 0);
-	}
-
-	DestroyWindow(m_hwnd);
-	m_hwnd = NULL;
-
-	UnregisterClass(m_applicationName, m_hInstance);
-	m_hInstance = NULL;
-}
-
-
-LRESULT CALLBACK WndProc(HWND winHandle, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch (msg)
-	{
-	case WM_CREATE:
-		log("Window create.");
-		break;
-	case WM_DESTROY:
-		log("Window destroy.");
-		PostQuitMessage(0);
-		return 0;
-	case WM_KEYDOWN:
-		return 0;
-	case WM_CHAR:
-		game->inputhandle((char)wParam);
-		return 0;
-	default:
-		break;
-	}
-	return DefWindowProc(winHandle, msg, wParam, lParam);
-}
-
-

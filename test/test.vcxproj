@@ -20,13 +20,13 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{9514A907-C971-43F6-8C7C-2CC95F454CE2}</ProjectGuid>
-    <RootNamespace>direct</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{BC4F9DB2-AE49-4C7C-AC51-73C7E32FAC81}</ProjectGuid>
+    <RootNamespace>test</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -115,35 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\event.cpp" />
-    <ClCompile Include="source\fileutils.cpp" />
-    <ClCompile Include="source\game.cpp" />
-    <ClCompile Include="source\inputcontrol.cpp" />
-    <ClCompile Include="source\keyboard.cpp" />
-    <ClCompile Include="source\localstring.cpp" />
-    <ClCompile Include="source\log.cpp" />
-    <ClCompile Include="source\msg.cpp" />
-    <ClCompile Include="source\platform.cpp" />
-    <ClCompile Include="source\sid.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\inputcontrol.h" />
-    <ClInclude Include="include\platform.h" />
-    <ClInclude Include="include\sid.h" />
-    <ClInclude Include="include\localstring.h" />
-    <ClInclude Include="include\msg.h" />
-    <ClInclude Include="include\event.h" />
-    <ClInclude Include="include\game.h" />
-    <ClInclude Include="include\keyboard.h" />
-    <ClInclude Include="include\keymap.h" />
-    <ClInclude Include="include\log.h" />
-    <ClInclude Include="include\fileutils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\.gitignore" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
