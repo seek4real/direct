@@ -6,6 +6,8 @@
 #include "../include/msg.h"
 #include "../include/log.h"
 
+using direct::Msg;
+using direct::Command;
 
 Msg::Msg(Command _cmd, std::string _desc) :cmd(_cmd), desc(_desc)
 {

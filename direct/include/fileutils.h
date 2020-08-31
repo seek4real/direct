@@ -7,14 +7,16 @@
 
 #include<iostream>
 
-
-class FileUtils
+namespace direct
 {
-public:
-	FileUtils();
-	~FileUtils();
+	class FileUtils
+	{
+	public:
+		FileUtils();
+		~FileUtils();
 
-private:
+		void static readFile();
+	private:
 
-};
-
+	};
+}

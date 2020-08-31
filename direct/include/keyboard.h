@@ -2,6 +2,7 @@
 
 //keyboard input handler
 
+namespace direct {
 class KeyBoardInput final
 {
 public:
@@ -12,4 +13,5 @@ private:
 	KeyBoardInput();
 	~KeyBoardInput();
 };
+}
 

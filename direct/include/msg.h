@@ -5,23 +5,28 @@
 
 #include <string>
 
-enum Command
+
+namespace direct
 {
-	Cmd_Null = 0,
-	Cmd_GameCreate,
-	Cmd_GameDestroy,
-	Cmd_Shutdown,
-};
+	enum Command
+	{
+		Cmd_Null = 0,
+		Cmd_GameCreate,
+		Cmd_GameDestroy,
+		Cmd_Shutdown,
+	};
 
 
-class Msg
-{
-public:
+	class Msg
+	{
+	public:
 
-	Msg(Command, std::string);
-	~Msg();
+		Msg(Command, std::string);
+		~Msg();
 
-private:
-	Command cmd;
-	std::string desc;
-};
+	private:
+		Command cmd;
+		std::string desc;
+	};
+}
+

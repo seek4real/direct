@@ -123,12 +123,12 @@
     <ClCompile Include="source\localstring.cpp" />
     <ClCompile Include="source\log.cpp" />
     <ClCompile Include="source\msg.cpp" />
-    <ClCompile Include="source\platform.cpp" />
+    <ClCompile Include="source\win32application.cpp" />
     <ClCompile Include="source\sid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\inputcontrol.h" />
-    <ClInclude Include="include\platform.h" />
+    <ClInclude Include="include\win32application.h" />
     <ClInclude Include="include\sid.h" />
     <ClInclude Include="include\localstring.h" />
     <ClInclude Include="include\msg.h" />

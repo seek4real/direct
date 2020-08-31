@@ -4,15 +4,15 @@
 #pragma once
 
 
+namespace direct {
 
 class Game
 {
 public:
-	Game();
-	~Game();
+	static auto instance()->Game&;
 	void init(bool debug, bool print, bool runlog);
 	void update();
-	void inputhandle(char);
+	void display();
 	void exit();
 
 	bool isrunning();
@@ -20,4 +20,10 @@ public:
 private:
 	bool running;
 	bool debug;
+
+	Game();
+	~Game();
+	Game(const Game&);
+	Game& operator=(const Game&);
 };
+}

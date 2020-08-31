@@ -9,9 +9,10 @@
 
 
 
+namespace direct
+{
 
-
-class Logger
+class _declspec(dllexport) Logger
 {
 public:
 	static Logger* get();
@@ -20,14 +21,20 @@ public:
 	void log(const std::string);
 	void print(const std::string);
 
-protected:
+private:
 	Logger();
 	~Logger();
 
-	static Logger* _instance;
-	std::fstream logfile;
+	std::fstream* logfile;
 
 	bool debug;
 	bool runprint;
 	bool runlog;
 };
+
+#ifndef _LOGGER_H_
+#define _LOGGER_H_
+#define console(s) Logger::get()->log(s)
+#endif // !_LOGGER_H_
+
+}

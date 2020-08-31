@@ -2,82 +2,66 @@
 ** 系统平台相关支持
 */
 
-
-#include <windows.h>
-#include "../include/platform.h"
-
+#include <string>
+#include "../include/win32application.h"
 #include "../include/log.h"
 #include "../include/game.h"
+#include "../include/keyboard.h"
 
-Game *game = nullptr;
+//#ifdef WIN32
+#include <windows.h>
+//#endif // WIN32
 
+
+using direct::Win32Application;
+using direct::Logger;
+using direct::Game;
+using direct::KeyBoardInput;
 
 //config
-const bool FULL_SCREEN = false;
+//const bool FULL_SCREEN = false;
+const int screenW = 800;
+const int screenH = 600;
 const bool DEBUG = true;
 const bool PRINT = true;
-const bool RUNLOG = false;
+const bool RUNLOG = true;
 
 LPCSTR m_applicationName;
 HINSTANCE m_hInstance;
 
 HWND m_hwnd;  //Application window句柄
+MSG msg;
 
 // WINDOWS CALLBACK FUNCTION
 static LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-void log(const std::string str)
+
+
+Win32Application::Win32Application():winWidth(0), winHeight(0), isFullScreen(false)
 {
-	//if (nullptr == str) {
-	//	Logger::getInstance()->info("error null str");
-	//	return;
-	//}
-	Logger::get()->log(str);
 }
 
-void console(const std::string s)
+Win32Application::~Win32Application()
 {
-	Logger::get()->print(s);
 }
 
-void Startup()
+
+
+
+void Win32Application::Startup()
 {
-	if (game == nullptr)
-	{
-		game = new Game;
-	}
-	game->init(DEBUG, PRINT, RUNLOG);
+	Game::instance().init(DEBUG, PRINT, RUNLOG);
+	this->InitWindow(screenW, screenH);
+	this->loop();
 }
 
-void Run()
-{
-	Logger::get()->log("Application Run Start.");
-	MSG msg;
-	while (game->isrunning())
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT) {
-				log("Message Quit.");
-				break;
-			}
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		game->update();
-	}
 
-}
-
-void Shutdown()
+void Win32Application::Shutdown()
 {
-	log("Application shutdown");
-	game->exit();
-	delete game;
-	game = nullptr;
+	Logger::get()->log("Application shutdown");
 	ShowCursor(true);
-	if (FULL_SCREEN) {
+	if (isFullScreen) {
 		ChangeDisplaySettings(NULL, 0);
 	}
 
@@ -89,29 +73,54 @@ void Shutdown()
 }
 
 
+/**
+** Game Main Loop.
+*/
+void Win32Application::loop()
+{
+	Logger::get()->log("Application Run Loop.");
+
+	Game* ptrGame = &Game::instance();
+	while (ptrGame->isrunning())
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			//转换加速键
+			TranslateMessage(&msg);
+
+			//将消息发送给windows proc(这里是WndProc)
+			DispatchMessage(&msg);
+		}
+		ptrGame->update();
+		ptrGame->display();
+	}
+
+}
+
+
 LRESULT CALLBACK WndProc(HWND winHandle, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
 	case WM_CREATE:
-		log("Window create.");
+		console("Window create.");
 		break;
 	case WM_DESTROY:
-		log("Window destroy.");
+		console("Window destroy.");
 		PostQuitMessage(0);
 		return 0;
 	case WM_KEYDOWN:
 		return 0;
 	case WM_CHAR:
-		game->inputhandle((char)wParam);
+		KeyBoardInput::onEvent((char)wParam);
 		return 0;
-	default:
-		break;
+	//default:
+	//	break;
 	}
 	return DefWindowProc(winHandle, msg, wParam, lParam);
 }
 
-bool InitWindow(int& screenW, int& screenH)
+bool Win32Application::InitWindow(int screenW, int screenH)
 {
 	WNDCLASSEX wc;
 	DEVMODE dmScreenSettings;
@@ -138,18 +147,18 @@ bool InitWindow(int& screenW, int& screenH)
 
 
 	// 得到windows桌面分辨率
-	screenW = GetSystemMetrics(SM_CXSCREEN);
-	screenH = GetSystemMetrics(SM_CYSCREEN);
+	int _screenW = GetSystemMetrics(SM_CXSCREEN);
+	int _screenH = GetSystemMetrics(SM_CYSCREEN);
 
 
 	// 根据是否全屏设置不同的分辨率.
-	if (FULL_SCREEN)
+	if (isFullScreen)
 	{
 		//全屏模式下，设置窗口大小为windows桌面分辨率.
 		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
 		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
-		dmScreenSettings.dmPelsWidth = (unsigned long)screenW;
-		dmScreenSettings.dmPelsHeight = (unsigned long)screenH;
+		dmScreenSettings.dmPelsWidth = (unsigned long)_screenW;
+		dmScreenSettings.dmPelsHeight = (unsigned long)_screenH;
 		dmScreenSettings.dmBitsPerPel = 32;
 		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 
@@ -161,27 +170,27 @@ bool InitWindow(int& screenW, int& screenH)
 	}
 	else
 	{
-		// 窗口模式：800*600.
-		screenW = 800;
-		screenH = 600;
+		// 窗口模式
+		//_screenW = screenW;
+		//_screenH = screenH;
 
 		// 窗口左上角坐标位置,posX, posY
-		posX = (GetSystemMetrics(SM_CXSCREEN) - screenW) / 2;
-		posY = (GetSystemMetrics(SM_CYSCREEN) - screenH) / 2;
+		posX = (GetSystemMetrics(SM_CXSCREEN) - _screenW) / 2;
+		posY = (GetSystemMetrics(SM_CYSCREEN) - _screenH) / 2;
 	}
 
 	// 全屏和窗口使用不同的参数.
-	if (FULL_SCREEN)
+	if (isFullScreen)
 	{
 		m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
 			WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
-			posX, posY, screenW, screenH, NULL, NULL, m_hInstance, NULL);
+			posX, posY, _screenW, _screenH, NULL, NULL, m_hInstance, NULL);
 	}
 	else
 	{
 		m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
 			WS_OVERLAPPEDWINDOW,
-			posX, posY, screenW, screenH, NULL, NULL, m_hInstance, NULL);
+			posX, posY, _screenW, _screenH, NULL, NULL, m_hInstance, NULL);
 	}
 
 	// 显示窗口并设置其为焦点.

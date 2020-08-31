@@ -1,23 +1,34 @@
 // Log.cpp
 
-#include <Windows.h>
+#include <windows.h>
 #include "../include/log.h"
 
 #ifndef _LOG_FILE_NAME_
-std::string LOG_FILE_NAME = "run.log";
 #define _LOG_FILE_NAME_ 0
+const std::string LOG_FILE_NAME = "debuglog.txt";
 #endif // !_LOG_FILE_NAME_
 
-Logger* Logger::_instance = nullptr;
+using std::fstream;
+using direct::Logger;
+
+
 HANDLE handle;
 
-Logger::Logger():debug(false), runprint(false), runlog(false)
+Logger::Logger():debug(true), runprint(true), runlog(true)
 {
-
+	if (runlog) {
+		logfile = new fstream;
+		this->init(debug, runprint, runlog);
+	}
 }
 
 Logger::~Logger()
 {
+	if (runlog && logfile) {
+		logfile->close();
+		delete logfile;
+		logfile = nullptr;
+	}
 }
 
 void Logger::init(bool _debug, bool _print, bool _runlog)
@@ -27,7 +38,7 @@ void Logger::init(bool _debug, bool _print, bool _runlog)
 	runlog = _runlog;
 	if (debug) {
 		if (runlog) {
-			logfile.open(LOG_FILE_NAME, std::ios::out);
+			logfile->open(LOG_FILE_NAME, std::ios::out | std::ios::trunc);
 		}
 
 		if (runprint) {
@@ -41,16 +52,12 @@ void Logger::init(bool _debug, bool _print, bool _runlog)
 void Logger::release()
 {
 	if (debug) {
-		if (runlog) {
-			logfile << "logfile release!" << std::endl;
-			logfile << "log file " << LOG_FILE_NAME << " closed." << std::endl;
-			logfile.close();
+		if (runlog && logfile->is_open()) {
+			(*logfile) << "logfile release!" << std::endl;
+			(*logfile) << "log file " << LOG_FILE_NAME << " closed." << std::endl;
+			logfile->close();
 		}
-		if (Logger::_instance != nullptr)
-		{
-			delete Logger::_instance;
-			Logger::_instance = nullptr;
-		}
+
 		if (runprint) {
 			FreeConsole();
 		}
@@ -64,8 +71,8 @@ void Logger::log(const std::string s)
 	if (!debug)
 		return;
 
-	if (logfile.is_open())
-		logfile << "[LOG]" << s << std::endl;
+	if (logfile->is_open())
+		(*logfile) << "[LOG]" << s << std::endl;
 	
 }
 
@@ -79,11 +86,20 @@ void Logger::print(const std::string s)
 	WriteConsole(handle, _s.c_str(), strlen(_s.c_str()), &len, NULL);
 }
 
+
+//以下是错误的c++单例实现，new生成的对象无法delete
+//Logger* Logger::get()
+//{
+//	if (_instance == nullptr) {
+//		_instance = new Logger();
+//	}
+//	return _instance;
+//}
+
+//正确的单例模式，直接使用静态变量
 Logger* Logger::get()
 {
-	if (Logger::_instance == nullptr) {
-		Logger::_instance = new Logger;
-	}
-	return Logger::_instance;
+	static Logger instance;
+	return &instance;
 }
 

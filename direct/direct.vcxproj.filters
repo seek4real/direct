@@ -47,7 +47,7 @@
     <ClCompile Include="source\inputcontrol.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="source\platform.cpp">
+    <ClCompile Include="source\win32application.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -82,7 +82,7 @@
     <ClInclude Include="include\inputcontrol.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\platform.h">
+    <ClInclude Include="include\win32application.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
