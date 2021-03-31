@@ -20,13 +20,13 @@ public:
 	
 
 	bool InitWindow(int, int);
-	void Startup();
+	bool Startup();
 	void Shutdown();
 
 	/**
 		windowsÓÎÏ·Ö÷Ñ­»·
 	*/
-	void loop();
+	bool loop();
 private:
 	int winWidth;
 	int winHeight;

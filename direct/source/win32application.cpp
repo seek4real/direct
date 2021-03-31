@@ -7,6 +7,7 @@
 #include "../include/log.h"
 #include "../include/game.h"
 #include "../include/keyboard.h"
+#include "../include/mouse.h"
 
 //#ifdef WIN32
 #include <windows.h>
@@ -17,6 +18,7 @@ using direct::Win32Application;
 using direct::Logger;
 using direct::Game;
 using direct::KeyBoardInput;
+using direct::MouseInput;
 
 //config
 //const bool FULL_SCREEN = false;
@@ -49,11 +51,11 @@ Win32Application::~Win32Application()
 
 
 
-void Win32Application::Startup()
+bool Win32Application::Startup()
 {
 	Game::instance().init(DEBUG, PRINT, RUNLOG);
 	this->InitWindow(screenW, screenH);
-	this->loop();
+	return this->loop();
 }
 
 
@@ -76,7 +78,7 @@ void Win32Application::Shutdown()
 /**
 ** Game Main Loop.
 */
-void Win32Application::loop()
+bool Win32Application::loop()
 {
 	Logger::get()->log("Application Run Loop.");
 
@@ -94,7 +96,7 @@ void Win32Application::loop()
 		ptrGame->update();
 		ptrGame->display();
 	}
-
+	return true;
 }
 
 
@@ -110,9 +112,23 @@ LRESULT CALLBACK WndProc(HWND winHandle, UINT msg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		return 0;
 	case WM_KEYDOWN:
+		KeyBoardInput::onWinKeyDown((char)wParam);
+		return 0;
+	case WM_LBUTTONDOWN:
+		MouseInput::single().onLeftKeyDown(LOWORD(lParam), HIWORD(lParam));
+		return 0;
+	case WM_RBUTTONDOWN:
+		MouseInput::single().onRightKeyDown(LOWORD(lParam), HIWORD(lParam));
+		return 0;
+	case WM_LBUTTONUP:
+		MouseInput::single().onLeftKeyUp(LOWORD(lParam), HIWORD(lParam));
+		return 0;
+	case WM_RBUTTONUP:
+		MouseInput::single().onRightKeyUp(LOWORD(lParam), HIWORD(lParam));
+		return 0;
+	case WM_MOUSEWHEEL:
 		return 0;
 	case WM_CHAR:
-		KeyBoardInput::onEvent((char)wParam);
 		return 0;
 	//default:
 	//	break;

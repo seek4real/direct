@@ -18,6 +18,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pCmdLine, int iCmdSh
 	direct::Logger::get()->log("entry win main.");
 	direct::Win32Application app;
 	app.Startup();
+
 	return 0;
 }
 

@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\directx.cpp" />
     <ClCompile Include="source\event.cpp" />
     <ClCompile Include="source\fileutils.cpp" />
     <ClCompile Include="source\game.cpp" />
@@ -122,12 +123,15 @@
     <ClCompile Include="source\keyboard.cpp" />
     <ClCompile Include="source\localstring.cpp" />
     <ClCompile Include="source\log.cpp" />
+    <ClCompile Include="source\mouse.cpp" />
     <ClCompile Include="source\msg.cpp" />
     <ClCompile Include="source\win32application.cpp" />
     <ClCompile Include="source\sid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\directx.h" />
     <ClInclude Include="include\inputcontrol.h" />
+    <ClInclude Include="include\mouse.h" />
     <ClInclude Include="include\win32application.h" />
     <ClInclude Include="include\sid.h" />
     <ClInclude Include="include\localstring.h" />

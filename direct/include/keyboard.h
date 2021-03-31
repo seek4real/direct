@@ -8,7 +8,8 @@ class KeyBoardInput final
 public:
 
 
-	static void onEvent(char);
+	static void onWinKeyDown(char);
+	static void onWinKeyUp(char);
 private:
 	KeyBoardInput();
 	~KeyBoardInput();
