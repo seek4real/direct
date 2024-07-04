@@ -8,7 +8,10 @@
 #include "../include/log.h"
 #include "../include/game.h"
 
-#include <WinUser.h>
+
+//#Tips there error: "No Target Arch... ", if use <winuser.h>. So instead in windows.h
+//#include <winuser.h>
+#include <Windows.h>
 
 using direct::KeyBoardInput;
 using direct::Game;

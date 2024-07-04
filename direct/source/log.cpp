@@ -14,7 +14,7 @@ using direct::Logger;
 
 HANDLE handle;
 
-Logger::Logger():debug(true), runprint(true), runlog(true)
+Logger::Logger():debug(true), runprint(false), runlog(true)
 {
 	if (runlog) {
 		logfile = new fstream;
@@ -79,6 +79,8 @@ void Logger::log(const std::string s)
 void Logger::print(const std::string s)
 {
 	if (!debug)
+		return;
+	if (!runprint)
 		return;
 
 	const std::string _s = s + "\n";
