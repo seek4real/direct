@@ -14,7 +14,7 @@ static Map gSidTable;
 
 sid getSid(const char* str)
 {
-	sid id1 = std::hash_value(str);
+	sid id1 = stdext::hash_value(str);
 
 	Map::iterator _pair = gSidTable.find(id1);
 	return _pair->first;

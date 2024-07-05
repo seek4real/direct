@@ -1,0 +1,4 @@
+[LOG]entry win main.
+[LOG]Init Game.
+[LOG]Window create.
+[LOG]Application Run Loop.

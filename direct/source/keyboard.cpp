@@ -8,6 +8,9 @@
 #include "../include/log.h"
 #include "../include/game.h"
 
+
+//#Tips there error: "No Target Arch... ", if use <winuser.h>. So instead in windows.h
+//#include <winuser.h>
 #include <Windows.h>
 
 using direct::KeyBoardInput;
@@ -25,7 +28,7 @@ KeyBoardInput::~KeyBoardInput()
 }
 
 
-void KeyBoardInput::onEvent(char key)
+void KeyBoardInput::onWinKeyDown(char key)
 {
 	std::string _input = "key_";
 	_input += toascii(key);
@@ -43,10 +46,15 @@ void KeyBoardInput::onEvent(char key)
 		}
 		delete  msg;
 		msg = nullptr;
-		//TODO 暂时直接关闭，之后改成发送时间消息
+		//TODO 暂时直接关闭，之后改成发送事件消息
 		Game::instance().stop();
 		break;
 	default:
 		break;
 	}
+}
+
+void KeyBoardInput::onWinKeyUp(char key)
+{
+
 }

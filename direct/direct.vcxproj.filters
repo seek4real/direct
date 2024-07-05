@@ -50,6 +50,12 @@
     <ClCompile Include="source\win32application.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="source\mouse.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="source\directx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\log.h">
@@ -83,6 +89,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\win32application.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mouse.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\directx.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

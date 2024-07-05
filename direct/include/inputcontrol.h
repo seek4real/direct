@@ -4,13 +4,16 @@
 
 #pragma once
 
-class InputControl
-{
-public:
-	InputControl();
-	~InputControl();
+namespace direct {
+	class InputControl
+	{
+	public:
 
-private:
 
-};
+	private:
+		InputControl();
+		~InputControl();
+	};
+}
+
 
