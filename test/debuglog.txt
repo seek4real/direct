@@ -2,3 +2,23 @@
 [LOG]Init Game.
 [LOG]Window create.
 [LOG]Application Run Loop.
+[LOG]left mouse key down position =712.000000,548.000000
+[LOG]key_H
+[LOG]key_E
+[LOG]key_L
+[LOG]key_L
+[LOG]key_O
+[LOG]key_ 
+[LOG]key_W
+[LOG]key_O
+[LOG]key_R
+[LOG]key_L
+[LOG]key_D
+[LOG]key_
+[LOG]left mouse key down position =1234.000000,353.000000
+[LOG]left mouse key down position =1275.000000,338.000000
+[LOG]left mouse key down position =1319.000000,321.000000
+[LOG]key_
+[LOG]stop win loop.
+[LOG]Application shutdown
+[LOG]Window destroy.
